@@ -1,85 +1,1126 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#111827">
-<title>Cheken | Games</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#111827;color:#f8fafc;font-family:system-ui,Arial,sans-serif}
-header{background:#1f2937;border-bottom:1px solid #344054;padding:22px max(20px,calc((100% - 1100px)/2));display:flex;justify-content:space-between;align-items:center}
-h1{margin:0;font-size:32px}
-main{max-width:1100px;margin:auto;padding:36px 20px 65px}
-.subtitle{color:#94a3b8;margin-top:4px}
-input{width:100%;padding:15px;background:#253247;border:1px solid #44516a;border-radius:12px;color:white;font-size:16px;margin:16px 0 8px}
-input:focus{outline:2px solid #67e8f9}
-.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:18px;margin-top:22px}
-.game{background:#1f2937;border:1px solid #334155;border-radius:15px;padding:26px 18px;min-height:205px;text-align:center;color:inherit;display:block;text-decoration:none}
-.game h3{margin:10px 0}
-.game .emoji{font-size:50px;margin-bottom:8px}
-.game p{color:#94a3b8;margin:9px 0;font-size:14px;line-height:1.5}
-a.game:hover,a.game:focus{border-color:#67e8f9;transform:translateY(-2px);outline:none}
-.status{display:inline-block;padding:5px 10px;border-radius:99px;font-size:12px;font-weight:700;background:#1e3a46;color:#a5f3fc}
-.status.pending{background:#374151;color:#cbd5e1}
-.game.pending{opacity:.75}
-footer{color:#94a3b8;text-align:center;margin-top:40px;font-size:13px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Cheken — your games, your playground. Play browser games in one place.">
+  <title>Schoology</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --surface: #151d32;
+      --surface-2: #1c2942;
+      --line: rgba(174, 198, 232, .16);
+      --text: #f5f8ff;
+      --muted: #a6b5d1;
+      --cyan: #6ee7f9;
+      --purple: #ad95ff;
+      --topbar-bg: rgba(13, 20, 38, .86);
+      --field-bg: #17243a;
+      --button-bg: #20334e;
+      --filter-bg: #19253b;
+      --feature-start: #123b63;
+      --feature-mid: #263b80;
+      --feature-end: #593675;
+      --orb-one: rgba(14, 188, 221, .47);
+      --orb-two: rgba(139, 83, 255, .5);
+      --orb-three: rgba(34, 174, 187, .36);
+      --glow-rgb: 110, 231, 249;
+      --trail-end-rgb: 173, 149, 255;
+    }
+    :root[data-theme="violet"] {
+      --bg: #100b23; --surface: #211834; --surface-2: #2b1d45;
+      --line: rgba(203, 170, 255, .2); --text: #faf5ff; --muted: #c2b2db;
+      --cyan: #dbb6ff; --purple: #f3a7ff;
+      --topbar-bg: rgba(26, 15, 47, .88); --field-bg: #2a1d44;
+      --button-bg: #352450; --filter-bg: #291c40;
+      --feature-start: #47236c; --feature-mid: #5e368e; --feature-end: #78335e;
+      --orb-one: rgba(174, 92, 235, .5); --orb-two: rgba(238, 81, 183, .4);
+      --orb-three: rgba(121, 76, 232, .36); --glow-rgb: 219, 182, 255; --trail-end-rgb: 243, 167, 255;
+    }
+    :root[data-theme="emerald"] {
+      --bg: #071a18; --surface: #112b29; --surface-2: #163a34;
+      --line: rgba(135, 235, 198, .18); --text: #effff9; --muted: #a3c9bd;
+      --cyan: #77f5bb; --purple: #8ae6cd;
+      --topbar-bg: rgba(9, 32, 28, .88); --field-bg: #15332f;
+      --button-bg: #1d433c; --filter-bg: #15352f;
+      --feature-start: #125a45; --feature-mid: #1b6d5a; --feature-end: #215c74;
+      --orb-one: rgba(32, 214, 145, .42); --orb-two: rgba(28, 188, 154, .36);
+      --orb-three: rgba(84, 236, 154, .3); --glow-rgb: 119, 245, 187; --trail-end-rgb: 138, 230, 205;
+    }
+    :root[data-theme="sunset"] {
+      --bg: #211018; --surface: #321d28; --surface-2: #442739;
+      --line: rgba(255, 183, 160, .2); --text: #fff7f2; --muted: #e0b9ba;
+      --cyan: #ffbd8d; --purple: #ff9cb8;
+      --topbar-bg: rgba(40, 18, 28, .88); --field-bg: #3d2531;
+      --button-bg: #523042; --filter-bg: #3b2230;
+      --feature-start: #a13b47; --feature-mid: #99507e; --feature-end: #5b3976;
+      --orb-one: rgba(255, 121, 94, .44); --orb-two: rgba(243, 98, 163, .37);
+      --orb-three: rgba(250, 172, 81, .28); --glow-rgb: 255, 189, 141; --trail-end-rgb: 255, 156, 184;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at 8% 8%, rgba(39, 124, 199, .17), transparent 36%),
+        radial-gradient(ellipse at 89% 23%, rgba(119, 73, 193, .15), transparent 37%),
+        radial-gradient(ellipse at 50% 100%, rgba(17, 120, 133, .08), transparent 43%);
+      animation: background-glow 16s ease-in-out infinite alternate;
+    }
+
+    /* Always-moving ambient backdrop. Pure CSS: no downloads or scripts. */
+    .ambient-scene {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      isolation: isolate;
+      background: radial-gradient(ellipse at 50% 100%, rgba(9, 72, 115, .12), transparent 65%);
+    }
+    .ambient-orb {
+      position: absolute;
+      width: min(55vw, 620px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(78px);
+      will-change: transform;
+      opacity: .45;
+    }
+    .ambient-orb.one {
+      top: -240px;
+      left: -150px;
+      background: radial-gradient(circle, var(--orb-one), transparent 68%);
+      animation: orb-drift-one 18s ease-in-out infinite alternate;
+    }
+    .ambient-orb.two {
+      top: 18%;
+      right: -230px;
+      background: radial-gradient(circle, var(--orb-two), transparent 67%);
+      animation: orb-drift-two 23s ease-in-out infinite alternate;
+    }
+    .ambient-orb.three {
+      bottom: -300px;
+      left: 24%;
+      background: radial-gradient(circle, var(--orb-three), transparent 68%);
+      animation: orb-drift-three 21s ease-in-out infinite alternate;
+    }
+    .ambient-star {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      background: #b3e8ff;
+      box-shadow: 0 0 11px 2px rgba(77, 198, 255, .4);
+      opacity: 0;
+      animation: star-glimmer var(--dur) ease-in-out var(--delay) infinite;
+    }
+    .ambient-star:nth-of-type(3n) { background: #dbc3ff; box-shadow: 0 0 10px 2px rgba(153, 121, 255, .38); }
+    /* Brief, repeating meteors travel behind all content. */
+    .meteor {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      width: var(--trail);
+      height: 2px;
+      border-radius: 100px;
+      background: linear-gradient(90deg, #ffffff, var(--cyan) 24%, transparent);
+      filter: drop-shadow(0 0 6px var(--cyan));
+      opacity: 0;
+      transform: rotate(-32deg);
+      transform-origin: left center;
+      animation: meteor-flight var(--dur) linear var(--delay) infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes meteor-flight {
+      0%, 76% { opacity: 0; transform: translate3d(0,0,0) rotate(-32deg); }
+      78% { opacity: .9; }
+      84% { opacity: .82; }
+      88%, 100% { opacity: 0; transform: translate3d(-42vw, 34vh, 0) rotate(-32deg); }
+    }
+    /* A quiet, translucent cursor afterglow. Canvas never blocks clicks. */
+    .cursor-trail {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+      opacity: .68; /* Let the page stay visually in front of the effect. */
+    }
+    .topbar, main, footer { position: relative; z-index: 2; }
+    @keyframes orb-drift-one {
+      from { transform: translate3d(0, 0, 0) scale(.95); }
+      to { transform: translate3d(19vw, 17vh, 0) scale(1.24); }
+    }
+    @keyframes orb-drift-two {
+      from { transform: translate3d(0, -10vh, 0) scale(1); }
+      to { transform: translate3d(-25vw, 20vh, 0) scale(1.16); }
+    }
+    @keyframes orb-drift-three {
+      from { transform: translate3d(-12vw, 0, 0) scale(.88); }
+      to { transform: translate3d(17vw, -19vh, 0) scale(1.18); }
+    }
+    @keyframes star-glimmer {
+      0%, 100% { opacity: 0; transform: translate3d(0, 8px, 0) scale(.6); }
+      45% { opacity: .75; transform: translate3d(9px, -12px, 0) scale(1.25); }
+      65% { opacity: .35; transform: translate3d(12px, -18px, 0) scale(1); }
+    }
+    .theme-picker { display: flex; align-items: center; gap: 9px; }
+    .theme-label { color: var(--muted); font-size: 12px; font-weight: 750; white-space: nowrap; }
+    .theme-swatch {
+      width: 29px;
+      height: 29px;
+      padding: 0;
+      flex: none;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, .25);
+      background: var(--swatch);
+      box-shadow: inset 0 0 0 3px rgba(5,8,15,.48);
+      transition: transform .2s, border-color .2s;
+    }
+    .theme-swatch[aria-pressed="true"] { border-color: #fff; box-shadow: 0 0 0 2px var(--cyan), inset 0 0 0 3px rgba(5,8,15,.48); transform: scale(1.06); }
+    .theme-swatch:hover { transform: scale(1.13); }
+    .header-actions { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 18px; }
+    @media (max-width: 640px) {
+      .ambient-orb { width: 85vw; filter: blur(55px); opacity: .32; }
+      .ambient-star { opacity: .28; }
+    }
+
+    a { color: inherit; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .topbar {
+      z-index: 12; /* Keep the settings dropdown above the featured banner. */
+      border-bottom: 1px solid var(--line);
+      background: var(--topbar-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .topbar-inner {
+      min-height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .logo {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: -.7px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #283e63, #453464);
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
+      font-size: 26px;
+    }
+    .topbar nav a {
+      text-decoration: none;
+      color: #d0dcf2;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      transition: background .2s, border-color .2s;
+    }
+    .topbar nav a:hover { background: #253553; border-color: #5d749c; }
+    main { padding-top: 36px; }
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--cyan);
+      font-size: 12px;
+      letter-spacing: 2.1px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .intro { margin-bottom: 26px; }
+    .intro h1 { margin: 0; font-size: clamp(32px, 5vw, 49px); letter-spacing: -1.5px; line-height: 1.12; }
+    .intro p:last-child { color: var(--muted); margin: 12px 0 0; font-size: 16px; }
+    .featured {
+      position: relative;
+      overflow: hidden;
+      min-height: 282px;
+      padding: clamp(26px, 5vw, 49px);
+      border: 1px solid rgba(149, 200, 255, .22);
+      border-radius: 25px;
+      background:
+        radial-gradient(circle at 76% 38%, rgba(114, 225, 255, .23), transparent 33%),
+        linear-gradient(112deg, var(--feature-start) 0%, var(--feature-mid) 53%, var(--feature-end) 100%);
+      box-shadow: 0 22px 70px rgba(2, 7, 18, .22);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 22px;
+    }
+    .featured::after {
+      content: "";
+      position: absolute;
+      width: 370px;
+      height: 370px;
+      top: -142px;
+      right: -115px;
+      border-radius: 50%;
+      border: 46px solid rgba(255, 255, 255, .055);
+      pointer-events: none;
+    }
+    .featured-copy { position: relative; z-index: 1; max-width: 570px; }
+    .pill {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: #dffaff;
+      background: rgba(20, 35, 65, .4);
+      border: 1px solid rgba(191, 243, 255, .33);
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: 850;
+    }
+    .featured h2 { margin: 16px 0 9px; font-size: clamp(27px, 4vw, 42px); letter-spacing: -1px; line-height: 1.15; }
+    .featured p { max-width: 430px; color: #e1ebff; margin: 0 0 25px; }
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 20px;
+      color: #101a2d;
+      background: white;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 850;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .19);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .primary-button:hover { transform: translateY(-2px); box-shadow: 0 13px 32px rgba(0, 0, 0, .24); }
+    .primary-button:active { transform: translateY(0) scale(.985); }
+    .featured-art {
+      position: relative;
+      z-index: 1;
+      flex: 0 0 220px;
+      width: 220px;
+      height: 205px;
+      display: grid;
+      place-items: center;
+      border-radius: 25px;
+      background: rgba(14, 27, 58, .24);
+      border: 1px solid rgba(223, 240, 255, .18);
+      box-shadow: inset 0 0 55px rgba(135, 223, 255, .09), 0 25px 45px rgba(10, 15, 38, .2);
+      transform: rotate(7deg);
+      animation: float 5s ease-in-out infinite;
+    }
+    .featured-art span { font-size: 108px; filter: drop-shadow(0 12px 20px rgba(4, 13, 29, .35)); }
+    .library { padding-top: 43px; padding-bottom: 62px; }
+    .section-heading { display: flex; justify-content: space-between; gap: 15px; align-items: end; flex-wrap: wrap; margin-bottom: 22px; }
+    .section-heading h2 { margin: 0 0 4px; font-size: 27px; letter-spacing: -.5px; }
+    .section-heading p { color: var(--muted); margin: 0; font-size: 14px; }
+    .count { color: var(--cyan); font-size: 13px; font-weight: 750; }
+    .tools { display: flex; gap: 13px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+    .search-wrap { position: relative; flex: 1 1 280px; }
+    .search-wrap::before { content: "⌕"; position: absolute; left: 16px; top: 50%; transform: translateY(-53%); font-size: 27px; color: #9cb8d8; pointer-events: none; }
+    .search-wrap input {
+      width: 100%;
+      padding: 14px 16px 14px 46px;
+      border: 1px solid #385171;
+      border-radius: 13px;
+      background: var(--field-bg);
+      color: white;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .search-wrap input::placeholder { color: #9dacc7; }
+    .search-wrap input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(110, 231, 249, .14); }
+    .random-button {
+      padding: 14px 18px;
+      color: #e8f4ff;
+      background: var(--button-bg);
+      border: 1px solid #3b5878;
+      border-radius: 13px;
+      font-weight: 750;
+      transition: background .2s, transform .2s;
+    }
+    .random-button:hover { background: #2b456a; transform: translateY(-2px); }
+    .random-button:active { transform: translateY(0) scale(.985); }
+    .filters { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 23px; }
+    .filter {
+      padding: 9px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--filter-bg);
+      color: #b8c8e3;
+      font-size: 13px;
+      font-weight: 750;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .filter:hover { border-color: #7194bc; color: white; }
+    .filter:active { transform: scale(.98); }
+    .filter[aria-pressed="true"] { background: var(--cyan); color: var(--bg); border-color: var(--cyan); }
+    .games { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 19px; }
+    .game-card {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .1);
+      transition: transform .23s ease, border-color .23s ease, box-shadow .23s ease;
+    }
+    .game-card:hover, .game-card:focus-within {
+      transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-5px);
+      border-color: var(--cyan);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, .38), 0 0 28px rgba(var(--glow-rgb), .10);
+    }
+    .game-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      border-radius: inherit;
+      background: radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 45%), rgba(var(--glow-rgb), .11), transparent 65%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .24s ease;
+    }
+    .game-card:hover::after { opacity: 1; }
+    .game-main { display: flex; flex-direction: column; flex: 1; color: inherit; text-decoration: none; }
+    .game-main .game-info { flex: 1; }
+    .favorite-button {
+      position: absolute;
+      z-index: 4;
+      right: 12px;
+      top: 12px;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,255,255,.23);
+      border-radius: 12px;
+      background: rgba(12,18,35,.72);
+      color: #fff;
+      font-size: 22px;
+      line-height: 1;
+      backdrop-filter: blur(7px);
+      transition: transform .2s, background .2s, border-color .2s;
+    }
+    .favorite-button:hover { transform: scale(1.06); border-color: var(--cyan); background: rgba(30,44,73,.95); }
+    .favorite-button:active { transform: scale(.94); }
+    .favorite-button[aria-pressed="true"] { color: #ff6f9b; background: rgba(65,23,50,.88); border-color: #ff8cae; }
+    .favorite-button[aria-pressed="true"] .heart { text-shadow: 0 0 12px #ff76a5; }
+    .favorite-button .heart { display: inline-block; }
+    .game-card.pending:hover { transform: none; box-shadow: 0 12px 30px rgba(0,0,0,.1); border-color: var(--line); }
+    .game-card.pending::after { display: none; }
+    .game-card[hidden] { display: none; animation: none; }
+    .game-art {
+      min-height: 153px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .game-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 75% 15%, rgba(255, 255, 255, .2), transparent 43%);
+      z-index: -1;
+    }
+    .game-art .art-emoji { font-size: 72px; line-height: 1; filter: drop-shadow(0 12px 14px rgba(7, 16, 34, .27)); transition: transform .25s ease; }
+    .game-card:hover .art-emoji { transform: scale(1.13) rotate(-5deg); }
+    .art-classic { background: linear-gradient(135deg, #237365, #19435f); }
+    .art-112 { background: linear-gradient(135deg, #30605b, #456886 65%, #45477d); }
+    .art-120 { background: linear-gradient(135deg, #624b9c, #2d6596); }
+    .art-arena { background: linear-gradient(135deg, #b15d3f, #733d6c); }
+    .art-nexus { background: linear-gradient(135deg, #4b536e, #333e57); }
+    .art-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(10, 19, 37, .62);
+      border: 1px solid rgba(255, 255, 255, .2);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .6px;
+    }
+    .game-info { display: flex; flex: 1; flex-direction: column; padding: 17px 18px 18px; }
+    .game-type { color: #8bbbd9; font-size: 11px; font-weight: 850; text-transform: uppercase; letter-spacing: 1px; }
+    .game-info h3 { margin: 5px 0 5px; font-size: 19px; line-height: 1.3; }
+    .game-info p { margin: 0 0 17px; color: var(--muted); font-size: 13px; }
+    .game-action {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      padding-top: 13px;
+      color: #9cf1ff;
+      font-weight: 850;
+      font-size: 13px;
+    }
+    .game-action .arrow { font-size: 20px; line-height: 1; transition: transform .24s ease; }
+    .game-card:hover .game-action .arrow { transform: translateX(3px); }
+    .game-card.pending { opacity: .73; }
+    .pending .game-action { color: #c4ccdd; }
+    .empty-state { padding: 35px; border: 1px dashed #4b6384; border-radius: 16px; text-align: center; color: var(--muted); }
+    .empty-state[hidden] { display: none; }
+    footer { border-top: 1px solid var(--line); padding: 26px 0 35px; text-align: center; color: #92a7c7; font-size: 13px; }
+    @keyframes float { 0%, 100% { transform: rotate(7deg) translateY(0); } 50% { transform: rotate(7deg) translateY(-12px); } }
+    @keyframes background-glow { from { opacity: .65; transform: scale(1); } to { opacity: 1; transform: scale(1.08); } }
+    /* Quiet notifications: short, unobtrusive feedback. */
+    .toast-stack {
+      position: fixed; right: 20px; bottom: 22px; z-index: 30;
+      display: grid; gap: 9px; width: min(340px, calc(100vw - 40px));
+      pointer-events: none;
+    }
+    .toast {
+      padding: 11px 15px; border: 1px solid var(--line); border-left: 3px solid var(--cyan);
+      border-radius: 12px; background: var(--surface-2); color: var(--text);
+      box-shadow: 0 12px 36px rgba(0,0,0,.3); font-size: 13px;
+      opacity: 0; transform: translateY(9px);
+      transition: opacity .24s ease, transform .24s ease;
+      backdrop-filter: blur(12px);
+    }
+    .toast.visible { opacity: .96; transform: translateY(0); }
+    /* Gentle one-time reveal on arrival; repeated filtering stays fast. */
+    .entrance { animation: gentle-arrive .56s cubic-bezier(.2,.75,.3,1) both; animation-delay: var(--arrive-delay,0ms); }
+    @keyframes gentle-arrive {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* A fade-only entrance leaves the cards' hover tilt free to work. */
+    .game-card.entrance { animation-name: card-arrive; animation-duration: 1.15s; animation-timing-function: cubic-bezier(.18,.72,.25,1); }
+    @keyframes card-arrive { from { opacity: 0; transform: translateY(13px); } to { opacity: 1; transform: translateY(0); } }
+    /* Compact keyboard-shortcuts reference in the header. */
+    .shortcuts-wrap { position: relative; }
+    .shortcuts-trigger {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 12px; background: var(--button-bg); color: var(--text);
+      border: 1px solid var(--line); border-radius: 12px; font-weight: 700; font-size: 13px;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .shortcuts-trigger:hover, .shortcuts-trigger[aria-expanded="true"] { border-color: var(--cyan); }
+    .shortcuts-menu {
+      position: absolute; z-index: 25; right: 0; top: calc(100% + 12px);
+      width: min(285px, calc(100vw - 28px)); padding: 17px;
+      background: var(--surface-2); border: 1px solid var(--line);
+      box-shadow: 0 24px 60px rgba(0,0,0,.48); border-radius: 17px;
+    }
+    .shortcuts-menu[hidden] { display: none; }
+    .shortcuts-menu h2 { margin: 0 0 4px; font-size: 16px; }
+    .shortcuts-intro { color: var(--muted); font-size: 12px; margin: 0 0 12px; }
+    .shortcut-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; font-size: 13px; }
+    .shortcut-row + .shortcut-row { border-top: 1px solid var(--line); }
+    kbd { display: inline-block; min-width: 27px; padding: 3px 7px; text-align: center; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; background: var(--button-bg); color: var(--cyan); font: 700 12px/1.4 system-ui, sans-serif; }
+    /* Previews are opened by an info button, also supporting keyboard and touch. */
+    .preview-trigger {
+      position: absolute; top: 62px; right: 12px; z-index: 7;
+      display: grid; place-items: center; width: 36px; height: 36px;
+      border-radius: 11px; border: 1px solid rgba(255,255,255,.25);
+      background: rgba(12,18,35,.72); color: #fff; font-size: 19px;
+      backdrop-filter: blur(8px); transition: background .2s, border-color .2s, transform .2s;
+    }
+    .preview-trigger:hover, .preview-trigger[aria-expanded="true"] {
+      background: rgba(30,44,73,.98); border-color: var(--cyan); transform: translateY(-1px);
+    }
+    .game-preview {
+      position: absolute; z-index: 6; top: 104px; left: 12px; right: 12px;
+      padding: 15px; border-radius: 13px;
+      background: rgba(12,19,36,.96); color: #f5f8ff;
+      border: 1px solid rgba(150,190,230,.3);
+      box-shadow: 0 18px 36px rgba(0,0,0,.33);
+      opacity: 0; transform: translateY(-5px); visibility: hidden;
+      pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility .18s;
+    }
+    .game-card.preview-open .game-preview,
+    .preview-trigger:hover ~ .game-preview,
+    .preview-trigger:focus-visible ~ .game-preview {
+      opacity: 1; transform: translateY(0); visibility: visible;
+    }
+    .game-preview strong { display: block; margin-bottom: 5px; font-size: 13px; color: #baf2ff; }
+    .game-preview p { margin: 0; font-size: 12px; color: #cfdbf0; line-height: 1.55; }
+    .game-preview .meta { margin-top: 9px; font-size: 11px; color: #a4b8d8; }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 28px, 1120px); }
+      .topbar-inner { min-height: 69px; }
+      .logo { font-size: 21px; }
+      .logo-icon { width: 40px; height: 40px; font-size: 24px; }
+      main { padding-top: 28px; }
+      .featured { min-height: 260px; padding: 27px; }
+      .featured-art { flex: 0 0 85px; width: 85px; height: 90px; transform: rotate(7deg); }
+      .featured-art span { font-size: 48px; }
+      .games { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+      .library { padding-top: 33px; }
+      .topbar-inner { flex-wrap: wrap; padding-block: 11px; }
+      .header-actions { gap: 11px; }
+      .theme-label { display: none; }
+      .theme-swatch { width: 27px; height: 27px; }
+      .shortcuts-trigger { padding: 8px 10px; }
+    }
+    @media (max-width: 430px) {
+      .featured-art { display: none; }
+      .featured { min-height: auto; }
+      .topbar nav a { padding: 9px 12px; }
+      .games { grid-template-columns: 1fr; }
+      .header-actions { width: 100%; justify-content: space-between; }
+      .cursor-trail { display: none; }
+    }
+    @media (hover: none), (pointer: coarse) {
+      .cursor-trail { display: none; }
+      .game-card:hover { transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cursor-trail, .meteor { display: none; }
+      .game-card:hover, .game-card:focus-within { transform: none; }
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
 </head>
 <body>
-<header><h1>🐔 Cheken</h1><strong>🎮 Games</strong></header>
-<main>
-<h2>Your games. Your playground.</h2>
-<p class="subtitle">Browser games hosted on Cheken.</p>
-<label for="search">Search games</label>
-<input id="search" placeholder="Search games..." oninput="filterGames()">
-<h2>All Games</h2>
-<div class="games">
+  <!-- Decorative background only; it never blocks clicks or scrolling. -->
+  <div class="ambient-scene" aria-hidden="true">
+    <div class="ambient-orb one"></div>
+    <div class="ambient-orb two"></div>
+    <div class="ambient-orb three"></div>
+    <span class="ambient-star" style="--x:85%;--y:65%;--size:3px;--dur:9s;--delay:-9.6s"></span>
+    <span class="ambient-star" style="--x:10%;--y:36%;--size:4px;--dur:10s;--delay:-9.0s"></span>
+    <span class="ambient-star" style="--x:53%;--y:27%;--size:2px;--dur:8s;--delay:-6.1s"></span>
+    <span class="ambient-star" style="--x:11%;--y:85%;--size:4px;--dur:6s;--delay:-4.7s"></span>
+    <span class="ambient-star" style="--x:56%;--y:57%;--size:2px;--dur:12s;--delay:-0.1s"></span>
+    <span class="ambient-star" style="--x:3%;--y:86%;--size:3px;--dur:9s;--delay:-10.3s"></span>
+    <span class="ambient-star" style="--x:45%;--y:82%;--size:2px;--dur:7s;--delay:-10.8s"></span>
+    <span class="ambient-star" style="--x:52%;--y:42%;--size:2px;--dur:6s;--delay:-10.0s"></span>
+    <span class="ambient-star" style="--x:92%;--y:23%;--size:3px;--dur:5s;--delay:-9.9s"></span>
+    <span class="ambient-star" style="--x:85%;--y:5%;--size:3px;--dur:7s;--delay:-7.8s"></span>
+    <span class="ambient-star" style="--x:75%;--y:77%;--size:3px;--dur:6s;--delay:-8.3s"></span>
+    <span class="ambient-star" style="--x:58%;--y:63%;--size:3px;--dur:5s;--delay:-7.7s"></span>
+    <span class="ambient-star" style="--x:35%;--y:26%;--size:3px;--dur:10s;--delay:-1.5s"></span>
+    <span class="ambient-star" style="--x:9%;--y:70%;--size:2px;--dur:7s;--delay:-9.5s"></span>
+    <span class="ambient-star" style="--x:96%;--y:66%;--size:4px;--dur:6s;--delay:-8.0s"></span>
+    <span class="ambient-star" style="--x:9%;--y:54%;--size:3px;--dur:6s;--delay:-8.4s"></span>
+    <span class="ambient-star" style="--x:73%;--y:93%;--size:2px;--dur:9s;--delay:-6.5s"></span>
+    <span class="ambient-star" style="--x:38%;--y:69%;--size:2px;--dur:5s;--delay:-1.1s"></span>
+    <span class="ambient-star" style="--x:29%;--y:65%;--size:4px;--dur:6s;--delay:-12.0s"></span>
+    <span class="ambient-star" style="--x:9%;--y:51%;--size:2px;--dur:9s;--delay:-3.6s"></span>
+    <span class="ambient-star" style="--x:14%;--y:8%;--size:4px;--dur:11s;--delay:-7.1s"></span>
+    <span class="ambient-star" style="--x:60%;--y:4%;--size:2px;--dur:10s;--delay:-3.1s"></span>
+    <span class="ambient-star" style="--x:81%;--y:28%;--size:2px;--dur:11s;--delay:-9.7s"></span>
+    <span class="ambient-star" style="--x:97%;--y:46%;--size:3px;--dur:6s;--delay:-7.9s"></span>
+    <span class="ambient-star" style="--x:7%;--y:27%;--size:2px;--dur:6s;--delay:-8.5s"></span>
+    <span class="ambient-star" style="--x:19%;--y:63%;--size:4px;--dur:12s;--delay:-10.8s"></span>
+    <!-- Shooting stars: different start times, no external graphics. -->
+    <span class="meteor" style="--x:88%;--y:7%;--trail:155px;--dur:11s;--delay:-6s"></span>
+    <span class="meteor" style="--x:71%;--y:30%;--trail:105px;--dur:16s;--delay:-10s"></span>
+    <span class="meteor" style="--x:98%;--y:48%;--trail:135px;--dur:13s;--delay:-2s"></span>
+    <span class="meteor" style="--x:62%;--y:10%;--trail:90px;--dur:18s;--delay:-15s"></span>
+  </div>
+  <canvas id="cursor-trail" class="cursor-trail" aria-hidden="true"></canvas>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="logo" href="/" aria-label="Cheken homepage"><span class="logo-icon">🐔</span> CHEKEN</a>
+      <div class="header-actions">
+        <div class="theme-picker" role="group" aria-label="Homepage color theme">
+          <span class="theme-label">🎨 Theme</span>
+          <button type="button" class="theme-swatch" data-theme="neon" style="--swatch:linear-gradient(135deg,#2dc2da,#6463d3)" aria-label="Neon blue theme" title="Neon Blue" aria-pressed="true"></button>
+          <button type="button" class="theme-swatch" data-theme="violet" style="--swatch:linear-gradient(135deg,#a15ced,#ec80c7)" aria-label="Purple galaxy theme" title="Purple Galaxy" aria-pressed="false"></button>
+          <button type="button" class="theme-swatch" data-theme="emerald" style="--swatch:linear-gradient(135deg,#16b58f,#84e8a5)" aria-label="Emerald green theme" title="Emerald Green" aria-pressed="false"></button>
+          <button type="button" class="theme-swatch" data-theme="sunset" style="--swatch:linear-gradient(135deg,#ff8252,#d04d9a)" aria-label="Sunset theme" title="Sunset Glow" aria-pressed="false"></button>
+        </div>
+        <div class="shortcuts-wrap" id="shortcuts-wrap">
+          <button type="button" id="shortcuts-trigger" class="shortcuts-trigger" aria-expanded="false" aria-controls="shortcuts-menu" aria-label="Show keyboard shortcuts">⌨️ <span>Shortcuts</span></button>
+          <div id="shortcuts-menu" class="shortcuts-menu" hidden>
+            <h2>Keyboard Shortcuts</h2>
+            <p class="shortcuts-intro">Quick ways to explore Cheken.</p>
+            <div class="shortcut-row"><span>Search games</span><kbd>/</kbd></div>
+            <div class="shortcut-row"><span>Clear search / close menu</span><kbd>Esc</kbd></div>
+            <div class="shortcut-row"><span>Surprise Me!</span><kbd>R</kbd></div>
+            <div class="shortcut-row"><span>Go to games</span><kbd>G</kbd></div>
+            <div class="shortcut-row"><span>Show these shortcuts</span><kbd>?</kbd></div>
+          </div>
+        </div>
+        <nav aria-label="Main navigation"><a href="#games">🎮 Explore Games</a></nav>
+      </div>
+    </div>
+  </header>
 
-<a class="game" href="games/minecraft/mc.html" data-name="minecraft eaglercraft">
-  <div class="emoji">⛏️</div>
-  <h3>Minecraft</h3>
-  <span class="status">▶ Play</span>
-  <p>Your existing Minecraft game.</p>
-</a>
+  <main class="wrap">
+    <section class="intro entrance" style="--arrive-delay:40ms" aria-labelledby="welcome-title">
+      <p class="eyebrow">Welcome to Cheken</p>
+      <h1 id="welcome-title">Your games. <span style="color:var(--cyan)">Your playground.</span></h1>
+      <p>Pick a game, jump in, and have fun. No complicated menus.</p>
+    </section>
 
-  <a class="game"
-   href="games/minecraft-new/"
-   data-name="minecraft 1.12.2 eaglercraft">
-  <div class="emoji">🛡️</div>
-  <h3>Minecraft 1.12.2</h3>
-  <span class="status">▶ Play</span>
-  <p>Explore, build, and survive in Minecraft 1.12.2!</p>
-</a>
+    <section class="featured entrance" style="--arrive-delay:110ms" aria-labelledby="featured-title">
+      <div class="featured-copy">
+        <span class="pill">✦ FEATURED GAME</span>
+        <h2 id="featured-title">Minecraft 1.20.6</h2>
+        <p>Explore a modern Minecraft-style world. Build, discover, and survive!</p>
+        <a class="primary-button" href="games/minecraft-1206/index.html">▶ Play Now <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="featured-art" aria-hidden="true"><span>🌸</span></div>
+    </section>
 
-<a class="game"
-   href="games/rocket-arena/"
-   data-name="rocket arena car soccer">
-  <div class="emoji">🏟️</div>
-  <h3>Rocket Arena</h3>
-  <span class="status">▶ Play</span>
-  <p>Free Play and Bot Matches</p>
-</a>
+    <section id="games" class="library" aria-labelledby="games-title">
+      <div class="section-heading entrance" style="--arrive-delay:170ms">
+        <div>
+          <p class="eyebrow">Find your next adventure</p>
+          <h2 id="games-title">Explore Games</h2>
+          <p>All your favorites in one place.</p>
+        </div>
+        <span id="game-count" class="count" aria-live="polite">5 games</span>
+      </div>
+
+      <div class="tools entrance" style="--arrive-delay:220ms">
+        <div class="search-wrap">
+          <label for="search" class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Search games</label>
+          <input id="search" type="search" placeholder="Search games...  (press /)" autocomplete="off">
+        </div>
+        <button id="random-game" class="random-button" type="button">🎲 Surprise Me!</button>
+      </div>
+
+      <div class="filters entrance" style="--arrive-delay:260ms" role="group" aria-label="Filter games by category">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true">All Games</button>
+        <button class="filter" type="button" data-filter="minecraft" aria-pressed="false">⛏️ Minecraft</button>
+        <button class="filter" type="button" data-filter="sports" aria-pressed="false">🏎️ Sports</button>
+        <button class="filter" type="button" data-filter="favorites" aria-pressed="false">❤️ Favorites</button>
+        <button class="filter" type="button" data-filter="upcoming" aria-pressed="false">✨ Coming Soon</button>
+      </div>
+
+      <div class="games" id="game-grid">
+        <article class="game-card entrance" style="--arrive-delay:330ms" data-name="minecraft eaglercraft classic 1.8.8" data-category="minecraft" data-playable="true" data-game-id="games/minecraft/mc.html">
+          <a class="game-main" href="games/minecraft/mc.html" aria-label="Play Minecraft">
+            <div class="game-art art-classic"><span class="art-badge">CLASSIC</span><span class="art-emoji" aria-hidden="true">⛏️</span></div>
+            <div class="game-info"><span class="game-type">Minecraft</span><h3>Minecraft</h3><p>Your original Minecraft adventure.</p><div class="game-action"><span>▶ Play Game</span><span class="arrow" aria-hidden="true">↗</span></div></div>
+          </a>
+          <button type="button" class="favorite-button" aria-label="Add Minecraft to favorites" aria-pressed="false" title="Add to favorites"><span class="heart" aria-hidden="true">♡</span></button>
+          <button type="button" class="preview-trigger" aria-label="Show details for Minecraft" aria-expanded="false" aria-controls="game-preview-1" title="Quick game details">ⓘ</button>
+          <div class="game-preview" id="game-preview-1" aria-hidden="true">
+            <strong>Version: Eaglercraft 1.8.8</strong>
+            <p>Classic browser Minecraft. Build, explore, and play.</p>
+            <p class="meta">Category: Minecraft</p>
+          </div>
+        </article>
+
+        <article class="game-card entrance" style="--arrive-delay:475ms" data-name="minecraft 1.12.2 eaglercraft survival" data-category="minecraft" data-playable="true" data-game-id="games/minecraft-new/">
+          <a class="game-main" href="games/minecraft-new/" aria-label="Play Minecraft 1.12.2">
+            <div class="game-art art-112"><span class="art-badge">SURVIVAL</span><span class="art-emoji" aria-hidden="true">🛡️</span></div>
+            <div class="game-info"><span class="game-type">Minecraft</span><h3>Minecraft 1.12.2</h3><p>Explore, build, and survive in Minecraft 1.12.2!</p><div class="game-action"><span>▶ Play Game</span><span class="arrow" aria-hidden="true">↗</span></div></div>
+          </a>
+          <button type="button" class="favorite-button" aria-label="Add Minecraft 1.12.2 to favorites" aria-pressed="false" title="Add to favorites"><span class="heart" aria-hidden="true">♡</span></button>
+          <button type="button" class="preview-trigger" aria-label="Show details for Minecraft 1.12.2" aria-expanded="false" aria-controls="game-preview-2" title="Quick game details">ⓘ</button>
+          <div class="game-preview" id="game-preview-2" aria-hidden="true">
+            <strong>Version: 1.12.2</strong>
+            <p>Build and survive with this browser-based edition.</p>
+            <p class="meta">Category: Minecraft</p>
+          </div>
+        </article>
+
+        <article class="game-card entrance" style="--arrive-delay:620ms" data-name="minecraft 1.20.6 eaglercraft modern" data-category="minecraft" data-playable="true" data-game-id="games/minecraft-1206/index.html">
+          <a class="game-main" href="games/minecraft-1206/index.html" aria-label="Play Minecraft 1.20.6">
+            <div class="game-art art-120"><span class="art-badge">FEATURED</span><span class="art-emoji" aria-hidden="true">🌸</span></div>
+            <div class="game-info"><span class="game-type">Minecraft</span><h3>Minecraft 1.20.6</h3><p>Explore a modern Minecraft-style world!</p><div class="game-action"><span>▶ Play Game</span><span class="arrow" aria-hidden="true">↗</span></div></div>
+          </a>
+          <button type="button" class="favorite-button" aria-label="Add Minecraft 1.20.6 to favorites" aria-pressed="false" title="Add to favorites"><span class="heart" aria-hidden="true">♡</span></button>
+          <button type="button" class="preview-trigger" aria-label="Show details for Minecraft 1.20.6" aria-expanded="false" aria-controls="game-preview-3" title="Quick game details">ⓘ</button>
+          <div class="game-preview" id="game-preview-3" aria-hidden="true">
+            <strong>Version: 1.20.6-style</strong>
+            <p>A modified Eaglercraft experience with newer-style features; not a full Java 1.20.6 port.</p>
+            <p class="meta">Category: Minecraft</p>
+          </div>
+        </article>
+
+        <article class="game-card entrance" style="--arrive-delay:765ms" data-name="rocket arena car soccer sports" data-category="sports" data-playable="true" data-game-id="games/rocket-arena/">
+          <a class="game-main" href="games/rocket-arena/" aria-label="Play Rocket Arena">
+            <div class="game-art art-arena"><span class="art-badge">CAR SOCCER</span><span class="art-emoji" aria-hidden="true">🏟️</span></div>
+            <div class="game-info"><span class="game-type">Sports / Racing</span><h3>Rocket Arena</h3><p>Free Play and Bot Matches.</p><div class="game-action"><span>▶ Play Game</span><span class="arrow" aria-hidden="true">↗</span></div></div>
+          </a>
+          <button type="button" class="favorite-button" aria-label="Add Rocket Arena to favorites" aria-pressed="false" title="Add to favorites"><span class="heart" aria-hidden="true">♡</span></button>
+          <button type="button" class="preview-trigger" aria-label="Show details for Rocket Arena" aria-expanded="false" aria-controls="game-preview-4" title="Quick game details">ⓘ</button>
+          <div class="game-preview" id="game-preview-4" aria-hidden="true">
+            <strong>Mode: Car soccer</strong>
+            <p>Free Play and bot matches.</p>
+            <p class="meta">Category: Sports / Racing</p>
+          </div>
+        </article>
+
+        <article class="game-card entrance pending" style="--arrive-delay:910ms" data-name="rocket nexus aerial rings training coming soon" data-category="upcoming" data-playable="false">
+          <div class="game-art art-nexus"><span class="art-badge">COMING SOON</span><span class="art-emoji" aria-hidden="true">🎯</span></div>
+          <div class="game-info"><span class="game-type">Training</span><h3>Rocket Nexus</h3><p>Coming soon — awaiting an authorized game build.</p><div class="game-action"><span>Not installed</span><span class="arrow" aria-hidden="true">⌛</span></div></div>
+          <button type="button" class="preview-trigger" aria-label="Show details for Rocket Nexus" aria-expanded="false" aria-controls="game-preview-5" title="Quick game details">ⓘ</button>
+          <div class="game-preview" id="game-preview-5" aria-hidden="true">
+            <strong>Status: Not installed</strong>
+            <p>Aerial rings training is planned, but no playable build is available yet.</p>
+            <p class="meta">Category: Coming Soon</p>
+          </div>
+        </article>
+      </div>
+      <div id="empty-state" class="empty-state" role="status" hidden>No games found. Try another search or category!</div>
+    </section>
+  </main>
+
+  <footer>🐔 Cheken &mdash; Your games. Your playground.</footer>
+  <div id="toast-stack" class="toast-stack" role="status" aria-live="polite" aria-atomic="false"></div>
+
+  <script>
+    // All game URLs stay relative to https://chekens.github.io/.
+    const search = document.getElementById('search');
+    const filters = document.querySelectorAll('.filter');
+    const games = Array.from(document.querySelectorAll('.game-card'));
+    const count = document.getElementById('game-count');
+    const emptyState = document.getElementById('empty-state');
+    const themeButtons = Array.from(document.querySelectorAll('.theme-swatch'));
+    const allowedThemes = ['neon', 'violet', 'emerald', 'sunset'];
+    const playableCards = games.filter(game => game.dataset.playable === 'true');
+    let currentFilter = 'all';
+
+    // The website works even if a visitor blocks browser storage.
+    function loadSetting(key, fallback) {
+      try { return localStorage.getItem(key) ?? fallback; } catch (_) { return fallback; }
+    }
+    function saveSetting(key, value) {
+      try { localStorage.setItem(key, value); } catch (_) { /* Private mode may block storage. */ }
+    }
+
+    // Lightweight toast notifications, never blocking game interactions.
+    const toastStack = document.getElementById('toast-stack');
+    function showToast(message) {
+      const item = document.createElement('div');
+      item.className = 'toast';
+      item.textContent = message;
+      toastStack.append(item);
+      if (toastStack.children.length > 2) toastStack.firstElementChild.remove();
+      requestAnimationFrame(() => item.classList.add('visible'));
+      setTimeout(() => {
+        item.classList.remove('visible');
+        setTimeout(() => item.remove(), 270);
+      }, 2150);
+    }
+
+    // Keyboard help is available from the header or by pressing ?.
+    const shortcutsTrigger = document.getElementById('shortcuts-trigger');
+    const shortcutsMenu = document.getElementById('shortcuts-menu');
+    const shortcutsWrap = document.getElementById('shortcuts-wrap');
+    function setShortcutsOpen(open) {
+      shortcutsMenu.hidden = !open;
+      shortcutsTrigger.setAttribute('aria-expanded', String(open));
+    }
+    shortcutsTrigger.addEventListener('click', () => setShortcutsOpen(shortcutsMenu.hidden));
+    document.addEventListener('click', event => {
+      if (!shortcutsWrap.contains(event.target)) setShortcutsOpen(false);
+    });
+
+    // Theme preference is saved only in the visitor's own browser.
+    function setTheme(name) {
+      const theme = allowedThemes.includes(name) ? name : 'neon';
+      document.documentElement.dataset.theme = theme;
+      themeButtons.forEach(button => {
+        button.setAttribute('aria-pressed', String(button.dataset.theme === theme));
+      });
+      saveSetting('cheken-theme', theme);
+    }
+    themeButtons.forEach(button => button.addEventListener('click', () => {
+      setTheme(button.dataset.theme);
+      showToast(`${button.title} theme selected`);
+    }));
+    setTheme(loadSetting('cheken-theme', 'neon'));
+
+    // Favorite game paths are stored locally, no accounts or server needed.
+    let favoriteIds = [];
+    try {
+      const saved = JSON.parse(loadSetting('cheken-favorites', '[]'));
+      if (Array.isArray(saved)) favoriteIds = saved.filter(id => typeof id === 'string');
+    } catch (_) { favoriteIds = []; }
+    const favorites = new Set(favoriteIds);
+
+    function updateFavoriteButton(card) {
+      const button = card.querySelector('.favorite-button');
+      if (!button) return;
+      const selected = favorites.has(card.dataset.gameId);
+      const name = card.querySelector('h3')?.textContent || 'game';
+      button.setAttribute('aria-pressed', String(selected));
+      button.setAttribute('aria-label', `${selected ? 'Remove' : 'Add'} ${name} ${selected ? 'from' : 'to'} favorites`);
+      button.title = selected ? 'Remove from favorites' : 'Add to favorites';
+      button.querySelector('.heart').textContent = selected ? '♥' : '♡';
+    }
+    playableCards.forEach(card => {
+      const button = card.querySelector('.favorite-button');
+      updateFavoriteButton(card);
+      button.addEventListener('click', () => {
+        const id = card.dataset.gameId;
+        if (favorites.has(id)) favorites.delete(id);
+        else favorites.add(id);
+        saveSetting('cheken-favorites', JSON.stringify(Array.from(favorites)));
+        updateFavoriteButton(card);
+        const gameName = card.querySelector('h3')?.textContent || 'Game';
+        showToast(favorites.has(id) ? `${gameName} added to favorites ♥` : `${gameName} removed from favorites`);
+        filterGames();
+      });
+    });
+
+    // Brief game info is available via the info buttons on mouse, keyboard and touch.
+    const previewButtons = Array.from(document.querySelectorAll('.preview-trigger'));
+    function closePreview(card) {
+      if (!card) return;
+      card.classList.remove('preview-open');
+      const button = card.querySelector('.preview-trigger');
+      const preview = card.querySelector('.game-preview');
+      if (button) button.setAttribute('aria-expanded', 'false');
+      if (preview) preview.setAttribute('aria-hidden', 'true');
+    }
+    previewButtons.forEach(button => button.addEventListener('click', () => {
+      const card = button.closest('.game-card');
+      const opening = !card.classList.contains('preview-open');
+      games.forEach(closePreview);
+      if (opening) {
+        card.classList.add('preview-open');
+        button.setAttribute('aria-expanded', 'true');
+        card.querySelector('.game-preview').setAttribute('aria-hidden', 'false');
+      }
+    }));
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.game-card')) games.forEach(closePreview);
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') games.forEach(closePreview);
+    });
+
+    // Smooth but restrained category changes; skip animations when requested.
+    function cardAnimationsAllowed() {
+      return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    function filterGames(animate = false) {
+      const query = search.value.toLowerCase().trim();
+      let visible = 0;
+      games.forEach(game => {
+        if (animate) closePreview(game);
+        const matchesName = (game.dataset.name || '').includes(query);
+        const matchesCategory = currentFilter === 'all' ||
+          (currentFilter === 'favorites'
+            ? favorites.has(game.dataset.gameId)
+            : game.dataset.category === currentFilter);
+        const show = matchesName && matchesCategory;
+        game.hidden = !show;
+        if (show) {
+          if (animate && cardAnimationsAllowed()) {
+            game.getAnimations().forEach(animation => animation.cancel());
+            game.animate([
+              { opacity: 0, transform: 'translateY(12px)' },
+              { opacity: 1, transform: 'translateY(0)' }
+            ], { duration: 440, delay: Math.min(visible, 6) * 65, easing: 'cubic-bezier(.2,.75,.3,1)' });
+          }
+          visible++;
+        }
+      });
+      count.textContent = `${visible} ${visible === 1 ? 'game' : 'games'}`;
+      emptyState.hidden = visible !== 0;
+      emptyState.textContent = currentFilter === 'favorites'
+        ? 'No favorite games found. Tap a ♡ on any game to save it here!'
+        : 'No games found. Try another search or category!';
+    }
+    search.addEventListener('input', () => filterGames());
+    filters.forEach(button => button.addEventListener('click', () => {
+      currentFilter = button.dataset.filter;
+      filters.forEach(filter => filter.setAttribute('aria-pressed', String(filter === button)));
+      filterGames(true);
+    }));
+
+    function launchRandomGame() {
+      const visibleCards = playableCards.filter(card => !card.hidden);
+      const choices = visibleCards.length ? visibleCards : playableCards;
+      if (!choices.length) return;
+      const card = choices[Math.floor(Math.random() * choices.length)];
+      window.location.href = card.querySelector('.game-main').getAttribute('href');
+    }
+    document.getElementById('random-game').addEventListener('click', launchRandomGame);
+
+    document.addEventListener('keydown', event => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.repeat) return;
+      const target = event.target;
+      const typing = target instanceof HTMLElement &&
+        (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
+      if (event.key === 'Escape') {
+        if (!shortcutsMenu.hidden) {
+          setShortcutsOpen(false);
+          shortcutsTrigger.focus();
+        }
+        if (search.value) {
+          search.value = '';
+          filterGames();
+        }
+        if (document.activeElement === search) search.blur();
+        return;
+      }
+      if (typing) return;
+      if (event.key === '/') {
+        event.preventDefault();
+        setShortcutsOpen(false);
+        document.getElementById('games').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        search.focus({ preventScroll: true });
+      } else if (event.key.toLowerCase() === 'r') {
+        event.preventDefault();
+        launchRandomGame();
+      } else if (event.key.toLowerCase() === 'g') {
+        event.preventDefault();
+        document.getElementById('games').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (event.key === '?') {
+        event.preventDefault();
+        setShortcutsOpen(shortcutsMenu.hidden);
+        if (!shortcutsMenu.hidden) shortcutsTrigger.focus();
+      }
+    });
 
 
-<div class="game pending" data-name="rocket nexus aerial rings training">
-  <div class="emoji">🎯</div>
-  <h3>Rocket Nexus</h3>
-  <span class="status pending">Not installed</span>
-  <p>Coming soon - awaiting an authorized game build.</p>
-</div>
+    // Desktop-only, subtle cursor trail. Each soft dot starts in the
+    // current theme's accent and softly shifts color as it fades away.
+    // Intentionally not full-size cursor copies: those can feel distracting.
+    // Cards keep their existing tilt/hover behavior.
+    // No trail on touchscreens or for people who prefer reduced motion.
+    const effectsAllowed = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+    if (effectsAllowed.matches) {
+      const canvas = document.getElementById('cursor-trail');
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        const sparks = [];
+        let lastPoint = null;
+        let frameRequested = false;
+        let lastFrameTime = 0;
 
-</div>
-<footer>Cheken - Your games. Your playground.</footer>
-</main>
-<script>
-function filterGames(){
-  const q=document.getElementById('search').value.toLowerCase().trim();
-  document.querySelectorAll('.game').forEach(game=>{
-    game.style.display=(game.dataset.name||'').includes(q)?'':'none';
-  });
-}
-</script>
+        function resizeTrail() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.round(window.innerWidth * dpr);
+          canvas.height = Math.round(window.innerHeight * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          sparks.length = 0;
+          lastPoint = null;
+        }
+        resizeTrail();
+        window.addEventListener('resize', resizeTrail, { passive: true });
+
+        function makeSpark(x, y) {
+          sparks.push({
+            x: x + (Math.random() - .5) * 2,
+            y: y + (Math.random() - .5) * 2,
+            dx: (Math.random() - .5) * .25,
+            dy: (Math.random() - .5) * .25,
+            radius: 2.2 + Math.random() * 1.3,
+            life: 1,
+            fade: .042 + Math.random() * .015
+          });
+          if (sparks.length > 90) sparks.shift();
+        }
+
+        function paintTrail(time) {
+          frameRequested = false;
+          const elapsed = lastFrameTime ? Math.min(2.5, (time - lastFrameTime) / 16.67) : 1;
+          lastFrameTime = time;
+          ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+          const styles = getComputedStyle(document.documentElement);
+          const start = styles.getPropertyValue('--glow-rgb').split(',').map(Number);
+          const end = styles.getPropertyValue('--trail-end-rgb').split(',').map(Number);
+          for (let i = sparks.length - 1; i >= 0; i--) {
+            const spark = sparks[i];
+            spark.life -= spark.fade * elapsed;
+            if (spark.life <= 0) { sparks.splice(i, 1); continue; }
+            spark.x += spark.dx * elapsed;
+            spark.y += spark.dy * elapsed;
+            const alpha = Math.pow(spark.life, 2);
+            const mix = Math.min(1, (1 - spark.life) * 1.15);
+            const rgb = start.map((channel, index) =>
+              Math.round(channel + (end[index] - channel) * mix)
+            ).join(',');
+            ctx.beginPath();
+            ctx.arc(spark.x, spark.y, spark.radius * (0.12 + 0.88 * spark.life), 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${rgb}, ${0.23 * alpha})`;
+            ctx.shadowColor = `rgba(${rgb}, ${0.11 * alpha})`;
+            ctx.shadowBlur = 4;
+            ctx.fill();
+          }
+          ctx.shadowBlur = 0;
+          if (sparks.length) {
+            frameRequested = true;
+            requestAnimationFrame(paintTrail);
+          } else {
+            lastFrameTime = 0;
+          }
+        }
+
+        window.addEventListener('pointermove', event => {
+          if (event.pointerType && event.pointerType !== 'mouse') return;
+          const next = { x: event.clientX, y: event.clientY };
+          if (lastPoint) {
+            const distance = Math.hypot(next.x - lastPoint.x, next.y - lastPoint.y);
+            // Interpolate sparks, so fast mouse movements still leave a trail.
+            const steps = Math.min(16, Math.ceil(distance / 10));
+            for (let i = 1; i <= steps; i++) {
+              const t = i / steps;
+              makeSpark(lastPoint.x + (next.x - lastPoint.x) * t,
+                        lastPoint.y + (next.y - lastPoint.y) * t);
+            }
+          } else makeSpark(next.x, next.y);
+          lastPoint = next;
+          if (!frameRequested) {
+            frameRequested = true;
+            requestAnimationFrame(paintTrail);
+          }
+        }, { passive: true });
+        document.addEventListener('mouseleave', () => { lastPoint = null; });
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) { sparks.length = 0; lastPoint = null; }
+        });
+      }
+      playableCards.forEach(card => {
+        card.addEventListener('pointermove', event => {
+          const rect = card.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width;
+          const y = (event.clientY - rect.top) / rect.height;
+          card.style.setProperty('--tilt-x', `${((0.5 - y) * 5).toFixed(2)}deg`);
+          card.style.setProperty('--tilt-y', `${((x - 0.5) * 5).toFixed(2)}deg`);
+          card.style.setProperty('--mouse-x', `${(x * 100).toFixed(1)}%`);
+          card.style.setProperty('--mouse-y', `${(y * 100).toFixed(1)}%`);
+        }, { passive: true });
+        card.addEventListener('pointerleave', () => {
+          card.style.setProperty('--tilt-x', '0deg');
+          card.style.setProperty('--tilt-y', '0deg');
+        });
+      });
+    }
+    filterGames();
+  </script>
 </body>
 </html>
