@@ -465,6 +465,7 @@
     .art-112 { background: linear-gradient(135deg, #30605b, #456886 65%, #45477d); }
     .art-120 { background: linear-gradient(135deg, #624b9c, #2d6596); }
     .art-arena { background: linear-gradient(135deg, #b15d3f, #733d6c); }
+    .art-surf { background: linear-gradient(135deg, #116b7b, #1e598e 58%, #433c92); }
     .art-nexus { background: linear-gradient(135deg, #4b536e, #333e57); }
     .art-badge {
       position: absolute;
@@ -703,7 +704,7 @@
           <h2 id="games-title">Explore Games</h2>
           <p>All your favorites in one place.</p>
         </div>
-        <span id="game-count" class="count" aria-live="polite">5 games</span>
+        <span id="game-count" class="count" aria-live="polite">6 games</span>
       </div>
 
       <div class="tools entrance" style="--arrive-delay:220ms">
@@ -718,6 +719,7 @@
         <button class="filter" type="button" data-filter="all" aria-pressed="true">All Games</button>
         <button class="filter" type="button" data-filter="minecraft" aria-pressed="false">⛏️ Minecraft</button>
         <button class="filter" type="button" data-filter="sports" aria-pressed="false">🏎️ Sports</button>
+        <button class="filter" type="button" data-filter="movement" aria-pressed="false">🌊 Movement</button>
         <button class="filter" type="button" data-filter="favorites" aria-pressed="false">❤️ Favorites</button>
         <button class="filter" type="button" data-filter="upcoming" aria-pressed="false">✨ Coming Soon</button>
       </div>
@@ -779,7 +781,21 @@
           </div>
         </article>
 
-        <article class="game-card entrance pending" style="--arrive-delay:910ms" data-name="rocket nexus aerial rings training coming soon" data-category="upcoming" data-playable="false">
+        <article class="game-card entrance" style="--arrive-delay:910ms" data-name="cs surf counter strike source surfing ramps movement skill speed time trial" data-category="movement" data-playable="true" data-game-id="games/surf/">
+          <a class="game-main" href="games/surf/" aria-label="Play CS Surf">
+            <div class="game-art art-surf"><span class="art-badge">MOVEMENT</span><span class="art-emoji" aria-hidden="true">🌊</span></div>
+            <div class="game-info"><span class="game-type">Movement / Skill</span><h3>CS Surf</h3><p>Ride angled ramps, build speed, and beat your personal best.</p><div class="game-action"><span>▶ Play Game</span><span class="arrow" aria-hidden="true">↗</span></div></div>
+          </a>
+          <button type="button" class="favorite-button" aria-label="Add CS Surf to favorites" aria-pressed="false" title="Add to favorites"><span class="heart" aria-hidden="true">♡</span></button>
+          <button type="button" class="preview-trigger" aria-label="Show details for CS Surf" aria-expanded="false" aria-controls="game-preview-6" title="Quick game details">ⓘ</button>
+          <div class="game-preview" id="game-preview-6" aria-hidden="true">
+            <strong>Mode: First-person surf</strong>
+            <p>Source-style air-strafing, two courses, a timer, and a personal-best ghost. Keyboard and mouse recommended.</p>
+            <p class="meta">Category: Movement</p>
+          </div>
+        </article>
+
+        <article class="game-card entrance pending" style="--arrive-delay:1055ms" data-name="rocket nexus aerial rings training coming soon" data-category="upcoming" data-playable="false">
           <div class="game-art art-nexus"><span class="art-badge">COMING SOON</span><span class="art-emoji" aria-hidden="true">🎯</span></div>
           <div class="game-info"><span class="game-type">Training</span><h3>Rocket Nexus</h3><p>Coming soon — awaiting an authorized game build.</p><div class="game-action"><span>Not installed</span><span class="arrow" aria-hidden="true">⌛</span></div></div>
           <button type="button" class="preview-trigger" aria-label="Show details for Rocket Nexus" aria-expanded="false" aria-controls="game-preview-5" title="Quick game details">ⓘ</button>
