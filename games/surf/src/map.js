@@ -1,0 +1,130 @@
+/* ============================== [MAP] ==============================
+   The map registry. Courses live in src/maps/ and are written in the
+   authoring language in mapkit.js; this file only decides which one is
+   currently built.
+
+   `MAP` is repopulated in place rather than replaced, so every other module
+   can import it once and keep the binding across a map change.            */
+import { MAP, DIR } from './mapkit.js';
+import { MOVE } from './config.js';
+import * as aircontrol from './maps/aircontrol.js';
+import * as helix from './maps/helix.js';
+import { maps as packedMaps } from './maps/packed.js';
+
+export { MAP, DIR };
+
+/**
+ * Every course, in the order the picker shows them.
+ *
+ * The two built-in ones first — they are code, they cost nothing, and one of
+ * them is what loads on arrival. Then the packed community maps, which are
+ * files in maps/ and are not fetched until chosen.
+ */
+export const MAPS = [
+  ...[aircontrol, helix].map(m => ({ ...m.meta, build: m.build })),
+  ...packedMaps,
+];
+
+/**
+ * The courses written in code, rather than fetched.
+ *
+ * They build synchronously and need nothing but this repository, which is why
+ * they are what the tests run against: a packed map is a download, and a test
+ * that needs the network is a test that fails for reasons of its own.
+ */
+export const BUILTIN = MAPS.filter(m => !m.packed);
+
+/**
+ * Is this a machine that could have a `local/` directory at all?
+ *
+ * It is gitignored, so it is never in a deployed build — asking for it on the
+ * public site is a guaranteed 404 in every visitor's console, which reads as a
+ * fault and is not one. Served from a machine you control, it is worth asking.
+ * `?local` forces the attempt for anyone hosting a build that does have one.
+ */
+function couldHaveLocalMaps() {
+  try {
+    if (new URLSearchParams(location.search).has('local')) return true;
+    if (location.protocol === 'file:') return true;
+    return /^(localhost|127\.0\.0\.1|\[::1\]|.*\.local)$/.test(location.hostname);
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * Courses from `local/`, which is gitignored and never deployed.
+ *
+ * This is where a .bsp you own goes. Content you did not make stays on your own
+ * machine: it cannot end up in the public repository or on the Pages build,
+ * because the directory it lives in is not in the repository at all. The import
+ * is dynamic and its absence is normal — the game runs without it.
+ *
+ * A map already shipped packed in maps/ wins: the ids match, so dropping the
+ * same .bsp in local/ does not put it in the picker twice.
+ */
+export async function loadLocalMaps() {
+  if (!couldHaveLocalMaps()) return 0;
+  try {
+    const mod = await import('../local/index.js');
+    const extra = (mod.maps || []).filter(m => m && m.id && m.build);
+    for (const m of extra) if (!MAPS.some(e => e.id === m.id)) MAPS.push({ local: true, ...m });
+    return extra.length;
+  } catch (e) {
+    return 0;                                         // no local/index.js: expected
+  }
+}
+
+export const DEFAULT_MAP = "aircontrol";
+
+/**
+ * Build a course by id. Falls back to the default rather than throwing.
+ *
+ * Async because a course can come from a file: the built-in ones return
+ * synchronously and `await` on them costs nothing, but a .bsp has to be
+ * fetched before there is anything to build.
+ */
+export async function buildMap(id = DEFAULT_MAP, onProgress) {
+  const entry = MAPS.find(m => m.id === id) || MAPS.find(m => m.id === DEFAULT_MAP) || MAPS[0];
+  await entry.build(onProgress);
+  return MAP;
+}
+
+/** The synchronous path, for the built-in courses and the tests. */
+export function buildMapSync(id = DEFAULT_MAP) {
+  const entry = MAPS.find(m => m.id === id) || MAPS.find(m => m.id === DEFAULT_MAP) || MAPS[0];
+  if (entry.packed || entry.local) {
+    throw new Error(`${id} is a file, not code: build it with buildMap()`);
+  }
+  const r = entry.build();
+  if (r && typeof r.then === 'function') throw new Error(`${id} must be built with buildMap()`);
+  return MAP;
+}
+
+/* ---------------- route analysis (used by the tests) ---------------- */
+
+/** Horizontal distance a fall of `drop` covers at `speed`. */
+export function airDistance(speed, drop) {
+  return speed * Math.sqrt(Math.max(0, 2 * drop / MOVE.gravity));
+}
+
+/** Every air section on the ride line, and the speed it was authored for. */
+export function airSections() {
+  const out = [];
+  for (let i = 1; i < MAP.route.length; i++) {
+    if (MAP.route[i].kind !== "air") continue;
+    // Skip back over the aim-frame a flight may drop at its midpoint: the
+    // section being measured is ramp-exit to landing, not half of it.
+    let j = i - 1;
+    while (j > 0 && MAP.route[j].kind === "gate") j--;
+    const a = MAP.route[j], b = MAP.route[i];
+    const span = Math.hypot(b.x - a.x, b.z - a.z);
+    const lateral = Math.abs((b.x - a.x) * Math.cos(a.yaw) - (b.z - a.z) * Math.sin(a.yaw));
+    const drop = a.y - b.y;
+    out.push({
+      stage: b.stage, span, lateral, drop,
+      need: drop > 0 ? span / Math.sqrt(2 * drop / MOVE.gravity) : Infinity,
+    });
+  }
+  return out;
+}

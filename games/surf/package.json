@@ -1,0 +1,15 @@
+{
+  "name": "surf-helix",
+  "version": "1.0.0",
+  "description": "A browser CS-style surf course on a faithful port of Source-engine movement.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --import ./test/register.mjs --test test/*.test.mjs",
+    "trace": "node --import ./test/register.mjs test/trace.mjs",
+    "pack": "node --max-old-space-size=14336 tools/pack-map.mjs",
+    "verify-maps": "node --max-old-space-size=14336 --import ./test/register.mjs tools/verify-maps.mjs",
+    "serve": "node tools/serve.mjs 8137"
+  },
+  "license": "MIT"
+}
